@@ -91,11 +91,13 @@
             position: relative;
         }
 
-        .back-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 100;
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
         }
 
         .confidence-score {
@@ -105,23 +107,45 @@
         .authority-badge {
             background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
         }
+
+        .kg-id-card {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .kg-id-card:hover {
+            transform: translateY(-1px);
+        }
     </style>
 </head>
 <body class="min-h-screen bg-white">
-    <!-- Back Button -->
-    <button class="back-btn glass rounded-full p-3 hover:shadow-lg transition-all duration-300 group">
-        <i class="fas fa-arrow-left text-gray-600 group-hover:text-indigo-500 transition-colors"></i>
-    </button>
+    
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <button onclick="goBack()" class="glass rounded-full p-2 hover:shadow-lg transition-all duration-300 group mr-4">
+                        <i class="fas fa-arrow-left text-gray-600 group-hover:text-indigo-500 transition-colors"></i>
+                    </button>
+                    <img src="https://dgtlmart.com/wp-content/uploads/2021/06/dgtlmart-Logo_Digital-marketing-company.png" 
+                         alt="DgtlMart Logo" 
+                         class="h-10">
+                </div>
+                <div class="flex items-center gap-4">
+                    <span class="text-sm text-gray-600 hidden md:block">Knowledge Graph Explorer</span>
+                    <button class="glass rounded-lg px-4 py-2 text-sm text-gray-600 hover:text-indigo-500 transition-colors">
+                        <i class="fas fa-question-circle mr-1"></i>Help
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
 
     <div class="container mx-auto px-6 py-8 max-w-4xl">
         
-        <!-- Header with Logo -->
+        <!-- Header -->
         <div class="text-center mb-12 fade-in">
-            <div class="mb-6">
-                <img src="https://dgtlmart.com/wp-content/uploads/2021/06/dgtlmart-Logo_Digital-marketing-company.png" 
-                     alt="DgtlMart Logo" 
-                     class="mx-auto h-16 mb-4">
-            </div>
             <h1 class="text-5xl font-bold mb-4 gradient-text">
                 <i class="fas fa-search text-indigo-500 mr-3"></i>
                 Knowledge Graph Explorer
@@ -199,6 +223,30 @@
 
         <!-- Results -->
         <div id="results"></div>
+
+        <!-- Sample Knowledge Graph ID Card (for demonstration) -->
+        <div class="fade-in stagger mt-8 hidden" id="sample-kg-id" style="--delay: 600ms;">
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">Sample Knowledge Graph Details</h3>
+            <div class="kg-id-card flex items-center gap-3 bg-white rounded-lg p-4 hover:bg-gray-50 transition-all duration-200 border border-gray-100 hover:border-purple-200 hover:shadow-md group" onclick="exploreKnowledgeGraph('/m/01s0l0')">
+                <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-lg bg-purple-50 shadow-sm group-hover:bg-purple-100 transition-colors">
+                    <i class="fas fa-fingerprint text-purple-500 text-lg group-hover:text-purple-600"></i>
+                </div>
+                <div class="min-w-0 flex-1">
+                    <h4 class="font-semibold text-gray-800 text-sm mb-1 group-hover:text-purple-700 transition-colors">
+                        Knowledge Graph ID
+                        <span class="text-xs text-purple-500 ml-1 opacity-75 group-hover:opacity-100">• Click to explore</span>
+                    </h4>
+                    <span class="text-xs text-gray-600 break-all group-hover:text-purple-600 transition-colors flex items-center">
+                        /m/01s0l0 
+                        <i class="fas fa-external-link-alt ml-2 opacity-50 group-hover:opacity-100 transform group-hover:translate-x-0.5 transition-all"></i>
+                        <span class="ml-2 text-purple-500 opacity-0 group-hover:opacity-100 transition-opacity">View details</span>
+                    </span>
+                </div>
+                <div class="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <i class="fas fa-chevron-right text-purple-400 text-sm"></i>
+                </div>
+            </div>
+        </div>
 
         <!-- Enhanced Info Section -->
         <div class="fade-in stagger mt-16" style="--delay: 400ms;">
@@ -279,10 +327,21 @@
         });
 
         // Back button functionality
-        document.querySelector('.back-btn').addEventListener('click', function() {
-            // You can customize this to go back in history or to a specific URL
+        function goBack() {
             window.history.back();
-        });
+        }
+
+        // Knowledge Graph exploration function
+        function exploreKnowledgeGraph(kgId) {
+            console.log('Exploring Knowledge Graph ID:', kgId);
+            // Add your knowledge graph exploration logic here
+            alert('Exploring Knowledge Graph ID: ' + kgId);
+        }
+
+        // Show sample KG ID for demonstration
+        setTimeout(() => {
+            document.getElementById('sample-kg-id').classList.remove('hidden');
+        }, 2000);
     </script>
     
     <script src="config.js"></script>
