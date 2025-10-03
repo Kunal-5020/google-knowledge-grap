@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Example search function for the example buttons
+// Example search function for the example buttons  
 function searchExample(query) {
     const queryInput = document.getElementById('query');
     queryInput.value = query;
